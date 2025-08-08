@@ -1,0 +1,277 @@
+{
+    // line wrapping
+    "editor.wordWrap": "on",
+    "editor.wrappingIndent": "indent",
+
+    // Treat new files (before first save) as LaTeX files.
+    "files.defaultLanguage": "latex",
+    // Treat LaTeX package (.sty) and class (.cls) files as LaTeX files.
+    "files.associations": {
+        "*.sty": "latex",
+        "*.cls": "latex"
+    },
+    // Hide the following file types from the VS Code folder list.
+    "files.exclude": {
+        "**/*.4ct": true,
+        "**/*.4tc": true,
+        "**/*.fdb_latexmk": true,
+        "**/*.idv": true,
+        "**/*.lg": true,
+        "**/*.lof": true,
+        "**/*.synctex.gz": true,
+        "**/*.synctex(busy)": true,
+        "**/*.tmp": true,
+        "**/*.xref": true,
+        "**/*.fls": true,
+        "**/*.loc": true,
+        "**/*.run.xml": true,
+        "**/*.soc": true,
+        "**/*.snm": true,
+        "**/*.blg": true,
+        "**/*-SAVE-ERROR": true
+    },
+    "files.autoSave": "onFocusChange",
+
+    // LaTeX specific
+    "latex-workshop.latex.autoBuild.cleanAndRetry.enabled": false,
+    "latex-workshop.latex.outDir": "%DIR%/out_dir",
+    "latex-workshop.view.pdf.viewer": "tab",
+    "latex-workshop.view.pdf.internal.synctex.keybinding": "double-click",
+    
+    // Aesthetic
+    "latex-workshop.view.pdf.color.dark.backgroundColor": "#809080",
+    "latex-workshop.view.pdf.color.light.backgroundColor": "#809080",
+    "latex-workshop.view.pdf.color.dark.pageBorderColor": "#809080",
+    "latex-workshop.view.pdf.color.light.pageBorderColor": "#809080",
+    
+    "latex-workshop.intellisense.package.dirs": [
+    // List any folders that contain additional LaTeX package (.sty) 
+    // or class (.cls) files, so that intellisense will use them 
+    // for auto-complete suggestions.
+    "packages",
+    "%WORKSPACE_FOLDER%/packages"
+    ],
+
+    "ltex.additionalRules.enablePickyRules": true,
+    "ltex.diagnosticSeverity": {
+        "default": "information", 
+        "MORFOLOGIK_RULE_EN_US": "warning", // Spelling errors.
+        "PASSIVE_VOICE": "hint",
+        "ENGLISH_WORD_REPEAT_BEGINNING_RULE": "hint",
+        "TOO_LONG_SENTENCE": "hint"
+    },
+
+    "ltex.latex.commands": {
+        "\\tableofcontents[]": "ignore", 
+        "\\@ifclassloaded{}{}{}": "ignore",
+        "\\includeonly{}": "ignore",  
+        "\\texttt{}": "dummy", // Inline formatting for code.
+        "\\newbool{}": "ignore",  
+        "\\setbool{}": "ignore",
+        "\\setbool{}{}": "ignore",
+        // Macros and environments definitions
+        "\\newcommand{}{}": "ignore",  
+        "\\renewcommand{}{}": "ignore", 
+        "\\newenvironment{}[][]{}{}": "ignore", 
+        "\\newenvironment{}[]{}{}": "ignore", 
+        "\\newenvironment{}": "ignore",  
+        "\\NewDocumentCommand{}{}{}": "ignore",  
+        "\\NewEnviron{}[]{}": "ignore",  
+        "\\newtheoremstyle{}{}{}{}{}{}{}{}{}": "ignore",  
+        "\\DeclarePairedDelimiterX{}[]{}{}": "ignore", 
+        "\\DeclarePairedDelimiter{}{}{}": "ignore", 
+        // Beamer
+        "\\setbeamertemplate{}[]{}": "ignore", 
+        "\\setbeamercolor{}{}": "ignore",  
+        "\\setbeamerfont{}{}": "ignore", 
+        "\\usebeamercolor[]{}": "ignore", 
+        "\\usebeamertemplate{}[]": "ignore",
+        "\\setbeamertemplate{}{}": "ignore", 
+        "\\setbeamertemplate{}[]": "ignore", 
+        "\\usebeamertemplate{}[]{}": "ignore",
+        "\\setbeamerfont{}": "ignore", 
+        "\\addtolength{}{}": "ignore", 
+        "\\movie{}{}": "ignore",
+        "\\movie[]{}{}": "ignore",
+        // Citations and references
+        "\\cite{}": "dummy",
+        "\\nocite{}": "ignore",
+        "\\cref[]{}": "dummy", 
+        "\\crefformat{}{}": "ignore",  
+        "\\Crefformat{}{}": "ignore", 
+        "\\crefmultiformat{}{}{}{}{}": "ignore",  
+        "\\Crefmultiformat{}{}{}{}{}": "ignore", 
+        "\\crtcrefreference{}": "dummy",  
+        // Changes annotations
+        "\\deleted{}": "ignore",
+        "\\todo{}": "ignore",
+        "\\todo[]{}": "ignore",
+        // Macros to hide LTeX false-positive
+        "\\ltexignore{}": "ignore",
+        "\\ltexdummy{}": "dummy",
+        "\\ltexvoweldummy{}": "vowelDummy"
+        // ...
+    },
+
+    "ltex.bibtex.fields": {
+        // Abstracts in bibliography entries typically are not 
+        // typed by the user and are rarely inserted into the 
+        // document, but tend to have a lot of LTeX+ warnings, 
+        // so I disable warnings for the abstracts.
+        "abstract": false
+    },
+
+    "dryerLint.ruleSets": [
+        {
+            "name": "LaTeX rules",
+            "language": "latex",
+            "rules": [
+                {
+                    // Check for \cref{}, \cite{}, \ref{}, or \eqref{} occurring without arguments.
+                    "name": "Empty Reference or Citation",
+                    "message": "Missing argument to \\cref, \\cite, \\ref, or \\eqref.",
+                    "pattern": "\\\\(cref|eqref|ref|cite)\\{\\s*\\}",
+                    "severity": "Error",
+                },
+                {
+                    // Check that a comma-separated list of labels passed to 
+                    // \cref or \cite does have spaces after any commas.
+                    // Although a trailing space is permitted in labels, it 
+                    // would be better to revise the label by removing the space.
+                    "name": "Reference has a space after the comma",
+                    "message": "The argument to \\cref or \\cite has a comma followed by a space. This typically indicates an error because the space will be read as a part of the label.",
+                    "pattern": "(\\\\(?:cref|cite)\\{[^\\}]*)\\,\\ ",
+                    "severity": "Warning"
+                },
+                {
+                    // Check that \label{} does not contain a comma or a backslash.
+                    "name": "Illegal Character in \\label{}",
+                    "message": "\\label{...} must not contain \",\" or \"\\\".",
+                    // Unescaped Regex: \\label\{[^\}]*[,\\][^\}]*\}
+                    "pattern": "\\\\label\\{[^\\}]*[\\\\,][^\\}]*\\}",
+                    "severity": "Error"
+                },
+                {
+                    // This rule assumes that you write display equations using "\[...\]", 
+                    // which means that "$$" should never appear in your document.
+                    "name": "Inline equation with empty contents: \"$$\".",
+                    "pattern": "\\$\\$",
+                    "severity": "Error",
+                    "fix": "$ $",
+                    "message": "\"$$\" should not be used. To insert a display equation, use \"\\[...\\]\"."
+                },
+                {
+                    "name": "Inline equation with empty contents: \"$ $\".",
+                    "pattern": "\\$[ ]+\\$",
+                    "severity": "Warning",
+                    "message": "Inline equation with empty contents: \"$ $\"."
+                },
+                {
+                    "name": "Itemize must start with an item",
+                    // Regex101.com link: https://regex101.com/r/9Ck04q/2
+                    // Regular expression (unescaped):
+                    //      "\\begin\{itemize\}(?:[ \t]*(?:%[^\n]*)?\r?\n)*[ \t]*(\S(?<!%|\\).*|\\(?!item).*)"
+                    // Explanation:
+                    //  1. "\\begin\{(?:itemize|enumerate|description)\}" matches the start 
+                    //     of the itemize, enumerate, or description environment.
+                    //  2. "(?:[ \t]*(?:%[^\n]*)?\r?\n)*" matches any number of comment lines or empty lines.
+                    //  3. "[ \t]*(\S(?<!%|\\).*|\\(?!item).*)" matches the first non-empty 
+                    //     non-comment line unless it starts with \item. More precisely:
+                    //     3.1 "[ \t]*" matches any leading whitespace.
+                    //     3.2 "\S(?<!%|\\).*" matches the non-white space, expect for comment 
+                    //         tokens ("%") or the start of a command sequence ("\"). 
+                    //         The ".*" causes the error to be displayed extending to the end 
+                    //         of the line.
+                    //  4. "\\(?!item).*" matches a command sequence (i.e., starting with "\") except for "\item", 
+                    //     which is excluded by the negated lookbehind "(?!item)".
+                    "pattern": "\\\\begin\\{(?:itemize|enumerate|description)\\}(?:[ \\t]*(?:%[^\\n]*)?\\r?\\n)*[ \\t]*(\\S(?<!%|\\\\).*|\\\\(?!item).*)",
+                    "message": "List environments must start with \\item.",
+                    "severity": "Error",
+                    "maxLines": 5
+                },
+                {
+                    "name": "Missing non-breaking space before \\cite",
+                    "message": "Use \"~\" (non-breaking space) before `\\cite` to prevent awkward line breaks.",
+                    "pattern": "[ ]\\\\cite\\{",
+                    "severity": "Information",
+                    "fix": "~\\cite\\{"
+                },
+                {
+                    // Check for a space before the reference to an equation. 
+                    // This rule requires that you label all equations with a prefix "eq:".
+                    "name": "Missing non-breaking space before cleveref equation reference",
+                    "message": "Use \"~\" (non-breaking space) before referencing an equation to prevent awkward line breaks.",
+                    "pattern": "[ ]\\\\cref\\{eq:",
+                    "severity": "Information",
+                    "fix": "~\\cref{eq:"
+                },
+                {
+                    "name": "Missing non-breaking space before references",
+                    "message": "Use \"~\" (non-breaking space) before \"\\eqref{}\" and \"\\ref{}\" to prevent awkward line breaks before the inserted number.",
+                    "pattern": "[ ]\\\\(eqref|ref)\\{",
+                    "severity": "Information",
+                    "fix": "~\\$1{:"
+                },
+                {
+                    // The punctuation at the end of a display equation should be placed inside the equation delimiters (“\[...\]”). 
+                    // Otherwise, the punctuation will be displayed incorrectly below the equation:
+                    "name": "Punctuation outside Display Equation",
+                    "pattern": "\\\\][.,;]",
+                    "severity": "Warning",
+                    "message": "Place punctuation inside display equation, before \"\\]\"."
+                },
+                {
+                    // The following rule checks for extra line breaks at the end of align, aligned, and cases environments.
+                    "name": "Multiline equation environment has extra line at end",
+                    "pattern": "(?:\\\\){2}[ \\t]*\\r?\\n[ \\t]*\\\\end{(?:align[*]?|aligned|cases)}",
+                    "severity": "Warning", 
+                    "message": "Extra line break at the end of environment.",
+                    "maxLines": 2
+                },
+                // Code Style
+                {
+                    "name": "Display equation starts on new line unless the preceding line is short",
+                    "message": "Display equations (\"\\[....\\]\") should start on a new line unless the preceding text is shorter than 15 characters.",
+                    // The length of the non-leading-whitespace string is 15 or more because 
+                    // "[^ \\t%]" is 1 character and ".{14,}" is 14 or more characters.
+                    "pattern": "^([ \\t]*)([^ \\t%].{14,}) \\\\\\[",
+                    "fix": "$1$2\n$1\\[", 
+                    "severity": "Information"
+                },
+                {
+                    "name": "Display equations should be followed by a new line",
+                    "message": "Display equations (\"\\[....\\]\") should be followed by a new line.",
+                    "pattern": "\\\\\\][ \\t]*(\\S)",
+                    "severity": "Information"
+                },
+                {
+                    "name": "Use spaces for indentation",
+                    "pattern": "^[ ]*[\\t][\\t ]*",
+                    "severity": "Information",
+                    "message": "Use spaces for indentation instead of tabs. Run \"Convert indentation to spaces\" to fix.",
+                },
+                {
+                    // The pattern matches a line that contains a sentence that ends 
+                    // with a period and the next line starts with a word character. 
+                    // The fix inserts a newline between the two lines.
+                    "name": "Start each sentence on a new line",
+                    "message": "Code style: Start each sentence on a new line.",
+                    // Regex: ^([ \t]*)((?:[^%]|(?<=\\)%).*\w\.)[ ]+(\w)
+                    // Parts: 
+                    // 1. Leading whitespace: ^([ \t]*)
+                    // 2. Any character except an unescaped comment character 
+                    //    ("%" but not "\%"): (?:[^%]|(?<=\\)%)
+                    // 2. Check that the "period" is not preceded by \big or \Big, 
+                    //    indicating that it is actually 
+                    //    being used to increase the size of delimiters: (?<!\\big|\\Big)
+                    // 3. Sentence ending with a period, but not in a comment: ((?:[^%]|(?<=\\)%)*\.)
+                    // 4. Whitespace between sentences: [ ]+
+                    // 5. First letter of the next sentence: (\w)
+                    "pattern": "^([ \\t]*)((?:[^%]|(?<=\\\\)%)*(?<!\\\\big|\\\\Big)\\.)[ ]+(\\w)",
+                    "severity": "Information",
+                    "fix": "$1$2\n$1$3",
+                },
+            ],
+        },
+    ],
+}
