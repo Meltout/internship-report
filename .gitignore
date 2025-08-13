@@ -1,3 +1,5 @@
+out_dir/
+
 ## Core latex/pdflatex auxiliary files:
 *.aux
 *.lof

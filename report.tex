@@ -1,0 +1,108 @@
+\documentclass[11pt,a4paper]{article}
+
+% --- Page layout (margins < 2cm) ---
+\usepackage[a4paper,margin=1.5cm]{geometry}
+
+% --- Fonts & micro-typography ---
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+
+% --- Math, figures, tables ---
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{float}
+
+% --- Links ---
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle    = {Portrait Retouching - Internship Report},
+  pdfauthor   = {Antani Gospodinov},
+  pdfcreator  = {LaTeX with biblatex/biber},
+  pdfkeywords = {}
+}
+
+% --- Single spacing (default); keep explicit ---
+\linespread{1.0}
+
+% --- Warn if less than 30 pages (non-blocking) ---
+\usepackage{lastpage}
+\makeatletter
+\AtEndDocument{
+  \ifnum\value{page}<30
+    \PackageWarningNoLine{PageCount}{Document has only \thepage\space pages (minimum 30 required)}
+  \fi
+}
+\makeatother
+
+% --- biblatex / biber setup ---
+\usepackage{csquotes} % recommended with biblatex
+\usepackage[
+  backend=biber,
+  style=numeric,   % numeric citations
+  sorting=none,    % show in citation order
+  url=true,
+  doi=true,
+  isbn=false,
+  giveninits=true, % initials for given names
+  maxbibnames=99
+]{biblatex}
+\addbibresource{refs.bib} % your .bib file
+
+\usepackage{todonotes}
+
+% --- Title (optional) ---
+\title{Portrait Retouching \textemdash{} Internship Report}
+\author{Antani Gospodinov}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\tableofcontents
+\newpage
+
+\section{Introduction}
+Portrait retouching is a delicate process aimed at reducing minor imperfections --- such as pimples, redness, wrinkles, or stray hairs --- while preserving the subject's unique identity and natural character.
+It is common for a professional photographer to capture hundreds of portraits that require retouching from a single assignment --- be it a wedding, modelling photoshoot, or a high school yearbook.
+The standard way of removing imperfections involves using a healing brush which allows the photographer to replace blemished regions with other parts of the image.
+Popular photo-editing software programs like \emph{Adobe Photoshop}, \emph{GIMP}, \emph{DxO PhotoLab} all offer a healing brush, but unfortunately using it just by itself often produces noticeable discontinuities in the finer textures of the skin, like the pores, or general over-smoothing.
+\todo{image}
+As a consequence, artists usually supplement the healing brush with other techniques such as \emph{frequency separation} to preserve texture and \emph{dodge and burn} to even out the skin.
+In total, a high-quality retouch can take an experienced practitioner more than five minutes per image and unlike more creative-minded image alterations, such as \emph{color grading}, it is generally seen as mundane and uninspiring labor.
+The United States saw over two million weddings during 2024.
+By making a few conservative estimates that on average 10 photos were captured per wedding and each would take two minutes to retouch we arrive at approximately 666,000 man-hours potentially being consumed by the relatively menial task of manual skin retouching. 
+After multiplying this number by \$22.75 --- the reported average hourly pay for a photographer in the U.S. --- we see that automated, high-quality portrait retouching can easily be a multi-million dollar industry around the world.
+\todo{source}
+\par
+Automating the skin retouching process comes with an inherent set of challenges like working with high-resolution images, preserving fine details, and loads of subjectivity around what is and isn't an imperfection. 
+In this internship we investigate different paradigms for solving the problem --- classical signal processing, physical modelling of the skin, end-to-end supervised models --- and discuss the upsides and limitations of each.
+Our novel contribution is an inference strategy which facilitates end-to-end models trained on lower resolution images to generalize better at high resolutions.
+\todo{user study results}
+\section{State-of-the-art study}
+
+\section{Method}
+We believe that any effective automatization of the skin retouching process should meet the following criteria:
+\begin{itemize}
+    \item Realistic blemish removal --- ideally we want the end result to look as if the blemish never existed.
+    \item Minimal changes in blemish-free regions --- to preserve the subject's identity as much as possible.
+    \item Fast inference on high-resolution photos --- up to 20 megapixels and more.
+\end{itemize}
+
+\subsection{Inference Strategies}
+
+\subsection{Fine-Tuning}
+
+\section{Results}
+
+\section{Discussion}
+
+\section{Conclusion}
+
+% ===== References =====
+\printbibliography
+
+\end{document}
